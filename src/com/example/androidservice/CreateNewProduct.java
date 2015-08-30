@@ -1,0 +1,69 @@
+package com.example.androidservice;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import android.content.SharedPreferences;
+import android.util.Log;
+
+class CreateNewProduct{
+
+	protected void doInBackground(final String uniqueid,final String time, final String lat,final String log,
+			final String speed, final String alt,final String acc) {
+	    
+	    Thread thread = new Thread()
+		{ 
+	    	
+		    @Override
+		    public void run() {
+		    	
+		    	HttpClient client = new DefaultHttpClient();
+				HttpPost post = new HttpPost("http://alibi.in/create_product.php"); 
+				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+				 pairs.add(new BasicNameValuePair("time", time));
+				 pairs.add(new BasicNameValuePair("uniqueid", uniqueid));
+				 pairs.add(new BasicNameValuePair("lat", lat));
+				 pairs.add(new BasicNameValuePair("log", log));
+				 pairs.add(new BasicNameValuePair("speed", speed));
+				 pairs.add(new BasicNameValuePair("alt", alt));
+				 pairs.add(new BasicNameValuePair("acc", acc));
+				
+
+				 
+				 try {
+					post.setEntity(new UrlEncodedFormEntity(pairs));
+					HttpResponse response = client.execute(post);
+					// Execute the GET call and obtain the response
+					HttpEntity responseEntity = response.getEntity();
+					// Retrieve a String from the response entity
+					String content = EntityUtils.toString(responseEntity);
+					
+					Log.v("post response",content);
+					
+					
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
+				} catch (ClientProtocolException e) {
+					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
+				} catch (IOException e) {
+					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
+				}  
+		    }
+		};
+		thread.start();
+	}
+}
