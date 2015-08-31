@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		running=true;
 		setContentView(R.layout.activity_main);
 		super.onCreate(savedInstanceState);
