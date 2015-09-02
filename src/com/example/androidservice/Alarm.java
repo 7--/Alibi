@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.androidservice.MyLocation.LocationResult;
 
@@ -23,24 +24,27 @@ public class Alarm extends BroadcastReceiver
    	 
      protected static final String[] Intent = null;
      public int index;
-     static String[][] UILocations = new String[5][100];
      int tries;
      int successes;
+     int pos; //position of the record_every spinner
      
-	@Override
+	 @Override
      public void onReceive(Context context, Intent intent) 
      {   
          PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
          PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
          wl.acquire();
          
-         
+         //SetAlarm(context);
          SharedPreferences settings = context.getSharedPreferences("MyPrefs", context.MODE_WORLD_WRITEABLE);
 		 String uniqueid = settings.getString("uniqueId", "Error"); 
-         
+	        
+		 
+		 Log.i("6", "main activity started alarm");   
          getLoc(context,uniqueid); 
-         
-         
+
+	     Log.i("pos",String.valueOf(pos));
+
          // Put here YOUR code.
          //getLoc(context);
          //Toast.makeText(context, "o", Toast.LENGTH_LONG).show(); // For example
@@ -48,12 +52,14 @@ public class Alarm extends BroadcastReceiver
          wl.release();
      }
 
- public void SetAlarm(Context context)
+ public void SetAlarm(Context context,int pos)
  {
+	 Log.v("Alarm set,num of mins:" ,String.valueOf(posToMin(pos)));
+	 //TODO function changes pos to appropriate number of minutes 
      AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
      Intent i = new Intent(context, Alarm.class);
      PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-     am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 3, pi); // Millisec * Second * Minute
+     am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * posToMin(pos), pi); // Millisec * Second * Minute
  }
 
  public void CancelAlarm(Context context)
@@ -63,11 +69,13 @@ public class Alarm extends BroadcastReceiver
      AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
      alarmManager.cancel(sender);
  }
+ 
+
  public void getLoc(final Context context,final String uniqueid){
 	    LocationResult locationResult = new LocationResult(){
 	    	@Override
 	        public void gotLocation(Location location){
-	    		Log.v("some loc","???????");
+	    		Log.v("getLoc()","gotLocation called");
 	    		tries++;
 	    		if(location!=null){
 	    			successes++;
@@ -77,13 +85,19 @@ public class Alarm extends BroadcastReceiver
 	    				//CreateNewLocation
 		    			CreateNewProduct cnp = new CreateNewProduct();
 		    			cnp.doInBackground(uniqueid,
-		    					makeTimeReadable(location.getTime()),
+		    					trimStringTo10Digits(makeDateReadable(location.getTime())),
 		    					Double.toString(location.getLatitude()), 
 		    					Double.toString(location.getLongitude()),
 		    					Float.toString(location.getSpeed()),
 		    					Double.toString(location.getAltitude()),
 		    					Float.toString(location.getAccuracy()));
 		    			
+		    			//should be date format in MM/DD/YYYY
+		    			//Then youll be able to select all the locations for a date
+		    			Log.v("Make the date readable", makeDateReadable(location.getTime()));
+		    			
+		    			
+		    			 //this is for local SQL which doesnt work
 		    			DatabaseHandler db = new DatabaseHandler(context);
 		    	         
 		    		        /**
@@ -128,17 +142,34 @@ public class Alarm extends BroadcastReceiver
 	    	Log.v("Unable to get Loc", "dayum");
  }
  
- public static String[][] getUILocations(){
-	 return UILocations;
- }
- 
- public String makeTimeReadable(Long time){
+ public String makeDateReadable(Long time){
 	 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss z");
 	 System.out.println(sdf.format(time));
 
 	 sdf.setTimeZone(TimeZone.getDefault());
 	 
 	 return sdf.format(time);
+ }
+ 
+ public String trimStringTo10Digits(String s){
+	 StringBuilder sb = new StringBuilder(s);
+	 sb.delete(10, 9999);
+	 return sb.toString();
+ }
+ 
+ //Change the pos the spinner to the appropriate number of mins
+ public int posToMin(int pos){
+	switch(pos){
+		case 0: return 2;
+		case 1: return 5;
+		case 2: return 10;
+		case 3: return 15;
+		case 4: return 30;
+		case 5: return 60;
+		case 6: return 120;
+		case 7: return 180;
+		default: return 10;
+	}
  }
 /*
  public void getLoc(Context context){

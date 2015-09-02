@@ -2,7 +2,9 @@ package com.example.androidservice;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -21,7 +23,7 @@ import android.util.Log;
 
 class CreateNewProduct{
 
-	protected void doInBackground(final String uniqueid,final String time, final String lat,final String log,
+	protected void doInBackground(final String uniqueid,final String date, final String lat,final String log,
 			final String speed, final String alt,final String acc) {
 	    
 	    Thread thread = new Thread()
@@ -33,17 +35,17 @@ class CreateNewProduct{
 		    	HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost("http://alibi.in/create_product.php"); 
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-				 pairs.add(new BasicNameValuePair("time", time));
+				 pairs.add(new BasicNameValuePair("date", date));
 				 pairs.add(new BasicNameValuePair("uniqueid", uniqueid));
 				 pairs.add(new BasicNameValuePair("lat", lat));
 				 pairs.add(new BasicNameValuePair("log", log));
 				 pairs.add(new BasicNameValuePair("speed", speed));
 				 pairs.add(new BasicNameValuePair("alt", alt));
 				 pairs.add(new BasicNameValuePair("acc", acc));
-				
+				 pairs.add(new BasicNameValuePair("time", getTime()));
 
-				 
-				 try {
+				
+				try {
 					post.setEntity(new UrlEncodedFormEntity(pairs));
 					HttpResponse response = client.execute(post);
 					// Execute the GET call and obtain the response
@@ -59,11 +61,17 @@ class CreateNewProduct{
 					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
 				} catch (ClientProtocolException e) {
 					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
-				} catch (IOException e) {
+				} catch (IOException e) { 
 					//Toast.makeText(this, "damn", Toast.LENGTH_LONG).show();
 				}  
 		    }
 		};
 		thread.start();
+	}
+	public String getTime(){
+		Date dt = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("h:mm aa");
+		String time1 = sdf.format(dt);
+		return time1;
 	}
 }
