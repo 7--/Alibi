@@ -6,14 +6,13 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--Receiver and this used for Alarm Manager -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Receiver and this used for Alarm Manager -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="23" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.androidservice.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,29 +29,34 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.example.androidservice.autostart" >
+        <receiver android:name=".autostart" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.example.androidservice.hello" >
+        <activity android:name=".hello" >
         </activity>
 
         <service
-            android:name="com.example.androidservice.service"
+            android:name=".service"
             android:enabled="true" />
 
         <activity
-            android:name="com.example.androidservice.GetLoc"
+            android:name=".GetLoc"
             android:label="@string/title_activity_get_loc" >
         </activity>
-        
+
         <!-- Receiver used for Alarm Manager -->
-        <receiver  android:process=":remote" android:name="Alarm"></receiver>
-        
-        
-        
+        <receiver
+            android:name=".Alarm"
+            android:process=":remote" >
+        </receiver>
+
+        <activity
+            android:name=".Register"
+            android:label="@string/title_activity_register" >
+        </activity>
     </application>
-    
+
 </manifest>

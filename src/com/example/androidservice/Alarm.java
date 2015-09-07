@@ -83,7 +83,7 @@ public class Alarm extends BroadcastReceiver
 		    			
 	    				//Creates a row of location data
 	    				//CreateNewLocation
-		    			CreateNewProduct cnp = new CreateNewProduct();
+		    			PostLocation cnp = new PostLocation();
 		    			cnp.doInBackground(uniqueid,
 		    					trimStringTo10Digits(makeDateReadable(location.getTime())),
 		    					Double.toString(location.getLatitude()), 

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,11 +16,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
 import android.content.SharedPreferences;
 import android.util.Log;
 
-class CreateNewProduct{
+class PostLocation{
 
 	protected void doInBackground(final String uniqueid,final String date, final String lat,final String log,
 			final String speed, final String alt,final String acc) {

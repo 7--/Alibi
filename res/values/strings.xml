@@ -6,10 +6,12 @@
     <string name="invisibletext">Your phone is running properly.</string>
     <string name="title_activity_get_loc">GetLoc</string>
     <string name="info1text">Write down the Private ID and website. Then click the button. </string>
-	<string name="privateidtext">Private ID:&#160;&#160;</string>
-	<string name="websitetext">HopscotchTracker.com</string>
-	<string name="warningtext">WARNING: This page will no longer be displayed after pressing this button.
+    <string name="privateidtext">Private ID:&#160;&#160;</string>
+    <string name="websitetext">HopscotchTracker.com</string>
+    <string name="warningtext">WARNING: This page will no longer be displayed after pressing this button.
 	     Only click the button if you are the sole user of this phone.</string>
-	<string name="buttontext">Invisible Mode (hides this app from phone thiefs)</string>
-	
+    <string name="buttontext">Invisible Mode (hides this app from phone thiefs)</string>
+    <string name="title_activity_register">Register</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
