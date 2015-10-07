@@ -38,6 +38,7 @@ public class MainActivity extends FragmentActivity {
 	public PostLocation cnp;
 	//Service
     private Intent intent;
+	private static final String  TAG = "MainActivity";
 
 	@Override 
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class MainActivity extends FragmentActivity {
 		txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
- 
+        
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
  
@@ -74,11 +75,11 @@ public class MainActivity extends FragmentActivity {
  
         String name = user.get("name");
         String email = user.get("email");
- 
+        Log.d(TAG ,"User: "+ name);
         // Displaying the user details on the screen
         txtName.setText(name);
         txtEmail.setText(email);
- 
+        
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
  

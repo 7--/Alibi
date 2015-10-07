@@ -51,7 +51,7 @@
             android:background="@color/btn_login_bg"
             android:text="@string/btn_login"
             android:textColor="@color/btn_login" />
- 
+        
         <!-- Link to Login Screen -->
  
         <Button

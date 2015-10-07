@@ -75,11 +75,11 @@ public class Alarm extends BroadcastReceiver
 	    LocationResult locationResult = new LocationResult(){
 	    	@Override
 	        public void gotLocation(Location location){
-	    		Log.v("getLoc()","gotLocation called");
+	    		Log.v("Alarm.java","Trying to get location");
 	    		tries++;
 	    		if(location!=null){
 	    			successes++;
-	    			Log.v("Location not null Tries: "+tries+"  Successes: "+successes ,"great");
+	    			Log.v("Alarm.java ","Found location");
 		    			
 	    				//Creates a row of location data
 	    				//CreateNewLocation
@@ -94,7 +94,7 @@ public class Alarm extends BroadcastReceiver
 		    			
 		    			//should be date format in MM/DD/YYYY
 		    			//Then youll be able to select all the locations for a date
-		    			Log.v("Make the date readable", makeDateReadable(location.getTime()));
+		    			Log.v("Alarm.java Make the date readable", makeDateReadable(location.getTime()));
 		    			
 		    			
 		    			 //this is for local SQL which doesnt work
@@ -139,7 +139,7 @@ public class Alarm extends BroadcastReceiver
 	    MyLocation myLocation = new MyLocation();
 	    boolean gotL =myLocation.getLocation(context, locationResult);
 	    if(gotL==false)
-	    	Log.v("Unable to get Loc", "dayum");
+	    	Log.v("Alarm.java", "can't find location");
  }
  
  public String makeDateReadable(Long time){

@@ -38,6 +38,7 @@ public class LoginActivity extends Activity {
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
+	private SQLiteHandler db;
  
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class LoginActivity extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
  
+        db = new SQLiteHandler(getApplicationContext());
+        
         // Session manager
         session = new SessionManager(getApplicationContext());
  
@@ -109,7 +112,7 @@ public class LoginActivity extends Activity {
         showDialog();
  
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_REGISTER, new Response.Listener<String>() {
+                AppConfig.URL_LOGIN, new Response.Listener<String>() {
  
                     @Override
                     public void onResponse(String response) {
@@ -125,13 +128,33 @@ public class LoginActivity extends Activity {
                                 // user successfully logged in
                                 // Create login session
                                 session.setLogin(true);
- 
+                                
+                                //// Now store the user in SQLite
+                                String uid = jObj.getString("uid");
+         
+                                JSONObject user = jObj.getJSONObject("user");
+                                String name = user.getString("name");
+                                String email = user.getString("email");
+                                String created_at = user
+                                        .getString("created_at");
+         
+                                //Check app is recieving user information
+                                if(name==null||email==null){
+                                	Log.e(TAG,"Name or email is missing");
+                                }
+                                else{
+                                	Log.d(TAG, "User found: " + name +" "+email);
+                                }
+                                
+                                // Inserting row in users table
+                                db.addUser(name, email, uid, created_at);
+                                ////
                                 // Launch main activity
                                 Intent intent = new Intent(LoginActivity.this,
                                         MainActivity.class);
                                 startActivity(intent);
                                 finish();
-                            } else {
+                             }else {
                                 // Error in login. Get the error message
                                 String errorMsg = jObj.getString("error_msg");
                                 Toast.makeText(getApplicationContext(),

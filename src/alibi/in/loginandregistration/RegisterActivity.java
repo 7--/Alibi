@@ -21,8 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.androidservice.MainActivity;
@@ -107,10 +113,12 @@ public class RegisterActivity extends Activity {
             final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
- 
+        
         pDialog.setMessage("Registering ...");
         showDialog();
  
+        Log.d(TAG, "Register details: " + name + email+password);
+
         StringRequest strReq = new StringRequest(Method.POST,
                 AppConfig.URL_REGISTER, new Response.Listener<String>() {
  
@@ -119,7 +127,7 @@ public class RegisterActivity extends Activity {
                         Log.d(TAG, "Register Response: " + response.toString());
                         hideDialog();
  
-                        try {
+                        try{
                             JSONObject jObj = new JSONObject(response);
                             boolean error = jObj.getBoolean("error");
                             if (!error) {
@@ -163,6 +171,20 @@ public class RegisterActivity extends Activity {
                         Toast.makeText(getApplicationContext(),
                                 error.getMessage(), Toast.LENGTH_LONG).show();
                         hideDialog();
+                        if (error instanceof TimeoutError ) {
+                            Log.v("Volley Error", "TimeoutError");
+                        }else if( error instanceof NoConnectionError){
+                        	Log.v("Volley Error", "NoConnectionError");
+                        } else if (error instanceof AuthFailureError) {
+                        	Log.v("Volley Error", "AuthFailureError");
+                        } else if (error instanceof ServerError) {
+                        	Log.v("Volley Error", "ServerError");
+                        } else if (error instanceof NetworkError) {
+                        	Log.v("Volley Error", "NetworkError");
+                        } else if (error instanceof ParseError) {
+                        	Log.v("Volley Error", " ParseError");
+                        }
+                        
                     }
                 }) {
  

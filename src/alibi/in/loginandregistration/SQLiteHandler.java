@@ -98,6 +98,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("uid", cursor.getString(3));
             user.put("created_at", cursor.getString(4));
         }
+        else{
+        	Log.d(TAG, "User not found");
+        }
         cursor.close();
         db.close();
         // return user
