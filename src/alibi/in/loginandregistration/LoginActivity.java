@@ -12,22 +12,24 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.androidservice.MainActivity;
 import com.example.androidservice.R;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
  
 public class LoginActivity extends Activity {
     // LogCat tag
@@ -137,13 +139,16 @@ public class LoginActivity extends Activity {
                                 String email = user.getString("email");
                                 String created_at = user
                                         .getString("created_at");
+                                
+                                //Record latest unique_id
+                                session.setUID(uid);
          
                                 //Check app is recieving user information
                                 if(name==null||email==null){
                                 	Log.e(TAG,"Name or email is missing");
                                 }
                                 else{
-                                	Log.d(TAG, "User found: " + name +" "+email);
+                                	Log.d(TAG, "User found: " + name +" "+email+ "  "+uid);
                                 }
                                 
                                 // Inserting row in users table

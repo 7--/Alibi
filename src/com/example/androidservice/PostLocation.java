@@ -16,22 +16,28 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import alibi.in.loginandregistration.SessionManager;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 class PostLocation{
 
+	
+	private static final String TAG ="PostLocation";
 	protected void doInBackground(final String uniqueid,final String date, final String lat,final String log,
-			final String speed, final String alt,final String acc) {
+			final String speed, final String alt,final String acc, final String unique_id) {
 	    
 	    Thread thread = new Thread()
 		{ 
 	    	
-		    @Override
+		    
+
+			@Override
 		    public void run() {
 		    	
 		    	HttpClient client = new DefaultHttpClient();
-				HttpPost post = new HttpPost("http://alibi.in/create_product.php"); 
+				HttpPost post = new HttpPost("http://alibi.in/mobile_login/add_location.php"); 
 				List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 				 pairs.add(new BasicNameValuePair("date", date));
 				 pairs.add(new BasicNameValuePair("uniqueid", uniqueid));
@@ -41,7 +47,8 @@ class PostLocation{
 				 pairs.add(new BasicNameValuePair("alt", alt));
 				 pairs.add(new BasicNameValuePair("acc", acc));
 				 pairs.add(new BasicNameValuePair("time", getTime()));
-
+				 pairs.add(new BasicNameValuePair("unique_id", unique_id));
+				 
 				
 				try {
 					post.setEntity(new UrlEncodedFormEntity(pairs));
@@ -51,7 +58,7 @@ class PostLocation{
 					// Retrieve a String from the response entity
 					String content = EntityUtils.toString(responseEntity);
 					
-					Log.v("post response",content);
+					Log.v(TAG,"Post Response: "+content);
 					
 					
 				} catch (UnsupportedEncodingException e) {
