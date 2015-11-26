@@ -1,4 +1,4 @@
-package com.example.androidservice;
+package in.alibi.locationservice;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,16 +6,15 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import alibi.in.loginandregistration.LoginActivity;
-import alibi.in.loginandregistration.SQLiteHandler;
-//Alibi - GPS Recorder
-import alibi.in.loginandregistration.SessionManager;
+import in.alibi.locationservice.R;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -24,13 +23,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import in.alibi.loginandregistration.LoginActivity;
+import in.alibi.loginandregistration.SQLiteHandler;
+import in.alibi.loginandregistration.SessionManager;
 
 public class MainActivity extends FragmentActivity {
-	public static boolean running;
 	//For UI
 	private TextView txtName;
     private TextView txtEmail;
     private Button btnLogout;
+    private Button btnViewMap;
+    private String viewMapLink = "http://alibi.in";
     //SQL
     private SQLiteHandler db;
     private SessionManager session;
@@ -43,12 +46,8 @@ public class MainActivity extends FragmentActivity {
 	@Override 
 	public void onCreate(Bundle savedInstanceState) {
 		
-		running=true;
 		setContentView(R.layout.activity_main);
 		super.onCreate(savedInstanceState);		
-		SharedPreferences settings = getSharedPreferences("MyPrefs", Context.MODE_WORLD_READABLE);		
-		createUniqueId();
-		
 		
 		if(!isMyServiceRunning()){
 			intent = new Intent(this,service.class);
@@ -59,6 +58,7 @@ public class MainActivity extends FragmentActivity {
 		txtName = (TextView) findViewById(R.id.name);
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnViewMap = (Button) findViewById(R.id.btnViewMap);
         
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -80,6 +80,15 @@ public class MainActivity extends FragmentActivity {
         txtName.setText(name);
         txtEmail.setText(email);
         
+        // View map button click event
+        btnViewMap.setOnClickListener(new View.OnClickListener() {
+ 
+            @Override
+            public void onClick(View v) {
+            	Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse(viewMapLink) );
+                startActivity( browse );
+            }
+        });
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
  
@@ -180,7 +189,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onStop(){
     	super.onStop();
-    	running=false;
+    	
     }
     
    

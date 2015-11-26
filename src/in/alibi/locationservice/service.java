@@ -1,4 +1,4 @@
-package com.example.androidservice;
+package in.alibi.locationservice;
 
 import java.util.Date;
 

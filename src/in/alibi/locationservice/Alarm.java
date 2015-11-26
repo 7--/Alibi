@@ -1,4 +1,4 @@
-package com.example.androidservice;
+package in.alibi.locationservice;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -15,8 +15,8 @@ import android.location.Location;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
-import com.example.androidservice.MyLocation.LocationResult;
-import alibi. in .loginandregistration.SessionManager;
+import in.alibi.locationservice.MyLocation.LocationResult;
+import in.alibi.loginandregistration.SessionManager;
 
 public class Alarm extends BroadcastReceiver {
 

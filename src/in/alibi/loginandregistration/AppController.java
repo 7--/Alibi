@@ -1,4 +1,4 @@
-package alibi.in.loginandregistration;
+package in.alibi.loginandregistration;
 
 import android.app.Application;
 import android.text.TextUtils;

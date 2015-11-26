@@ -4,9 +4,9 @@
  * twitter: http://twitter.com/ravitamada
  * */
 
-package alibi.in.loginandregistration;
+package in.alibi.loginandregistration;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map;
 
 import org.json.JSONException;
@@ -16,8 +16,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.androidservice.MainActivity;
-import com.example.androidservice.R;
+import in.alibi.locationservice.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,6 +29,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import in.alibi.locationservice.MainActivity;
  
 public class LoginActivity extends Activity {
     // LogCat tag

@@ -32,12 +32,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13dp" />
+        
+        <TextView
+            android:id="@+id/notice"
+            android:background="@color/bg_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notice"
+            android:layout_marginTop="10dip"
+            android:padding="10dp"
+            android:textSize="15dp" />
  
+        <Button
+            android:id="@+id/btnViewMap"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:background="@color/btn_logut_bg"
+            android:text="@string/btn_map_bg"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+        
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
+            android:layout_marginTop="5dip"
             android:background="@color/btn_logut_bg"
             android:text="@string/btn_logout"
             android:textAllCaps="false"

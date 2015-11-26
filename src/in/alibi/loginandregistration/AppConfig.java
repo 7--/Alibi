@@ -1,4 +1,4 @@
-package alibi.in.loginandregistration;
+package in.alibi.loginandregistration;
 
 public class AppConfig {
     // Server user login url

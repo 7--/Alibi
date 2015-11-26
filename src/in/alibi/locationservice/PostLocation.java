@@ -1,4 +1,4 @@
-package com.example.androidservice;
+package in.alibi.locationservice;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -17,9 +17,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import alibi.in.loginandregistration.SessionManager;
 import android.content.SharedPreferences;
 import android.util.Log;
+import in.alibi.loginandregistration.SessionManager;
 
 class PostLocation{
 
